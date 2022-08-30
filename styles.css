@@ -1,0 +1,82 @@
+html {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+.body {
+    height: 100vh;
+    width: 100vw;
+    background: url(Resources/bg.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    backdrop-filter: blur(20px);
+    margin: 0%;
+    text-align: center;
+    display: table;
+    z-index: 9;
+}
+.text {
+    border-style: none none solid;
+    border-width: 0px 0px 1px;
+    border-color: #000 #000 hsla(0, 0%, 100%, 0.59);
+    border-radius: 0px;
+    font-family: Assistant, sans-serif;
+    color: #fff;
+    font-size: 20px;
+    line-height: 40px;
+    font-weight: 400;
+}
+.text.agents {
+    background-color: hsla(0, 0%, 100%, 0.2);
+    text-decoration: none;
+}
+.text.maps {
+    text-decoration: none;
+}
+.text-block {
+    font-family: Anton, sans-serif;
+    color: #fbffd5;
+    font-size: 100px;
+    line-height: 100%;
+    margin-top: 20vh;
+    margin-left: 60vw;
+    text-align: left;
+}
+.text-block-2 {
+    border-style: none;
+    border-width: 1px;
+    border-color: transparent;
+    font-family: Assistant, sans-serif;
+    color: #fff;
+    font-size: 50px;
+    line-height: 150%;
+    text-align: center;
+}
+.button {
+    position: relative;
+    margin-left: 60vw;
+    margin-right: 10vw;
+    margin-top: 2vh;
+    display: block;
+    background-color: rgba(158, 232, 255, 0.7);
+    font-family: Assistant, sans-serif;
+    color:white;
+    font-size: 75px;
+    line-height: 80%;
+    text-align: center;
+    text-decoration: none;
+    z-index: 10;
+}
+.test {
+    display: inline;
+    justify-content: center;
+}
+.agent {
+    position: absolute;
+    margin-left: -20vw;
+    margin-top: 10vh;
+    max-width: 35%;
+    z-index: 1;
+}

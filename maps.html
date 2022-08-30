@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html id="site">
+    <head>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Anton&family=Assistant&display=swap');
+        </style> 
+        <link rel="stylesheet" href="maps.css">
+        <title>Valorant Agent Picker</title>
+    </head>
+    <body class="body">
+        <div class="test">
+            <a href="index.html" class="text agents">AGENTS</div>
+            
+            <a href="#" class="text maps">MAPS</div>
+        </div>  
+        <div class="text-block" id="name">AGENT NAME</div>
+        <script type="text/javascript">
+            function randomize(){
+                var images = new Array();
+                images[0] = "./Resources/Maps/ascent.jpg";
+                images[1] = "./Resources/Maps/bind.jpg";
+                images[2] = "./Resources/Maps/breeze.jpg";
+                images[3] = "./Resources/Maps/fracture.jpg";
+                images[4] = "./Resources/Maps/haven.jpg";
+                images[5] = "./Resources/Maps/icebox.jpg";
+                images[6] = "./Resources/Maps/pearl.jpg";
+                images[7] = "./Resources/Maps/split.jpg";
+                var rand = Math.floor(Math.random() * images.length);
+                document.getElementById("site").style.backgroundImage = "url(" + images[rand] + ")";
+                document.getElementById("name").textContent = images[rand].substr(17,).slice(0, -4).toUpperCase();
+            }
+            randomize()
+        </script>
+        <a href="#" class="button w-button" type="button" onclick="randomize()">SPIN</a>
+    </body>
+</html>
