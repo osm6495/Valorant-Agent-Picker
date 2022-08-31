@@ -12,10 +12,11 @@
             <a href="index.html" class="text agents">AGENTS</div>
             
             <a href="#" class="text maps">MAPS</div>
+            <a href="teams.html" class="text teams">TEAMS</div>
         </div>  
         <div class="text-block" id="name">AGENT NAME</div>
         <script type="text/javascript">
-            function randomize(){
+            function spin(){
                 var images = new Array();
                 images[0] = "./Resources/Maps/ascent.jpg";
                 images[1] = "./Resources/Maps/bind.jpg";
@@ -29,8 +30,8 @@
                 document.getElementById("site").style.backgroundImage = "url(" + images[rand] + ")";
                 document.getElementById("name").textContent = images[rand].substr(17,).slice(0, -4).toUpperCase();
             }
-            randomize()
+            spin()
         </script>
-        <a href="#" class="button w-button" type="button" onclick="randomize()">SPIN</a>
+        <a href="#" class="button w-button" type="button" onclick="spin()">SPIN</a>
     </body>
 </html>
