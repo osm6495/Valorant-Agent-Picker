@@ -33,6 +33,9 @@ html {
     background-color: hsla(0, 0%, 100%, 0.2);
     text-decoration: none;
 }
+.text.teams {
+    text-decoration: none;
+}
 .text-block {
     font-family: Anton, sans-serif;
     color: #fbffd5;
@@ -62,7 +65,7 @@ html {
     font-family: Assistant, sans-serif;
     color:white;
     font-size: 75px;
-    line-height: 80%;
+    line-height: 100%;
     text-align: center;
     text-decoration: none;
     z-index: 10;
