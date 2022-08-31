@@ -15,6 +15,10 @@
         </div>  
         <div class="text-block" id="name">AGENT NAME</div>
         <script type="text/javascript">
+            function inc(curr_index, images) {
+                document.getElementById("site").style.backgroundImage = "url(" + images[curr_index] + ")";
+                document.getElementById("name").textContent = images[curr_index].substr(17,).slice(0, -4).toUpperCase();
+            }
             function spin(){
                 var images = new Array();
                 images[0] = "./Resources/Maps/ascent.jpg";
@@ -25,9 +29,44 @@
                 images[5] = "./Resources/Maps/icebox.jpg";
                 images[6] = "./Resources/Maps/pearl.jpg";
                 images[7] = "./Resources/Maps/split.jpg";
-                var rand = Math.floor(Math.random() * images.length);
-                document.getElementById("site").style.backgroundImage = "url(" + images[rand] + ")";
-                document.getElementById("name").textContent = images[rand].substr(17,).slice(0, -4).toUpperCase();
+                var rand_index = Math.floor(Math.random() * images.length);
+
+                var operations = 16;
+                var curr_index = 0;
+                while (curr_index != rand_index){
+                    //Loop to beginning of array
+                    if(curr_index == 7){
+                        curr_index = 0;
+                        operations++;
+                    } else {
+                        curr_index++;
+                        operations++;
+                    }
+                    
+                }
+                var frame;
+                var time = 1; //miliseconds between operations
+                var count = 0;
+
+                frame = setInterval(frame, 100)
+                function frame() {
+                    setTimeout(function inner() {
+                        if (count < operations) {
+                            if(curr_index == 7) {
+                                curr_index = 0;
+                                inc(curr_index, images);
+                            } else {
+                                curr_index++;
+                                inc(curr_index, images);
+                            }
+                            time = (time ** 2);
+                            count++;
+                        } else {
+                            clearInterval(frame);
+                        }
+                    }, time);
+                }
+                
             }
             spin()
         </script>
