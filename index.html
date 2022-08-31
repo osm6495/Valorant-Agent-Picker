@@ -15,8 +15,35 @@
             <a href="maps.html" class="text maps">MAPS</div>
         </div>  
         <div class="text-block" id="name">AGENT NAME</div>
+        
+        <a href="#" class="button w-button" type="button" onclick="spin()">SPIN</a>
+        <div class="thumbnail">
+            <img src="./Resources/Thumbnails/astra.png" class="thumb" id="1"></img>
+            <img src="./Resources/Thumbnails/breach.png" class="thumb" id="2"></img>
+            <img src="./Resources/Thumbnails/brimstone.png" class="thumb" id="3"></img>
+            <img src="./Resources/Thumbnails/chamber.png" class="center" id="4"></img>
+            <img src="./Resources/Thumbnails/cypher.png" class="thumb" id="5"></img>
+            <img src="./Resources/Thumbnails/fade.png" class="thumb" id="6"></img>
+            <img src="./Resources/Thumbnails/jett.png" class="thumb" id="7"></img>
+        </div>
         <script type="text/javascript">
-            function randomize(){
+            function inc(icons, lookup_table, elem, images){
+                //Loops all 6 elems
+                for (let i = 0; i < 7; i++) {
+                    if (lookup_table[i] == 18) {
+                        lookup_table[i] = 0; //Increment the stored index of the current element
+                        elem[i].src = icons[0]
+                    } else {
+                        lookup_table[i] += 1; //Increment the stored index of the current element
+                        elem[i].src = icons[lookup_table[i]]
+                    }
+                    if (i == 3) {
+                        document.getElementById("agent").src = images[lookup_table[i]];
+                        document.getElementById("name").textContent = images[lookup_table[i]].substr(19,).slice(0, -4).toUpperCase();
+                    }
+                }
+            }
+            function spin(){
                 var images = new Array();
                 images[0] = "./Resources/Agents/Astra.png";
                 images[1] = "./Resources/Agents/Breach.png";
@@ -37,12 +64,70 @@
                 images[16] = "./Resources/Agents/Sova.png";
                 images[17] = "./Resources/Agents/Viper.png";
                 images[18] = "./Resources/Agents/Yoru.png";
-                var rand = Math.floor(Math.random() * images.length)
-                document.getElementById("agent").src = images[rand];
-                document.getElementById("name").textContent = images[rand].substr(19,).slice(0, -4).toUpperCase();
+                var rand_index = Math.floor(Math.random() * images.length);
+                //document.getElementById("name").textcontent = images.indexOf(document.getElementById("3").src);
+                var time = 100;
+                var elem = new Array();
+                elem[0] = document.getElementById("1");
+                elem[1] = document.getElementById("2");
+                elem[2] = document.getElementById("3");
+                elem[3] = document.getElementById("4");
+                elem[4] = document.getElementById("5");
+                elem[5] = document.getElementById("6");
+                elem[6] = document.getElementById("7");
+                var lookup_table = new Array(0, 1, 2, 3, 4, 5, 6);
+                var icons = new Array();
+                icons[0] = "./Resources/Thumbnails/astra.png";
+                icons[1] = "./Resources/Thumbnails/breach.png";
+                icons[2] = "./Resources/Thumbnails/brimstone.png";
+                icons[3] = "./Resources/Thumbnails/chamber.png";
+                icons[4] = "./Resources/Thumbnails/cypher.png";
+                icons[5] = "./Resources/Thumbnails/fade.png";
+                icons[6] = "./Resources/Thumbnails/jett.png";
+                icons[7] = "./Resources/Thumbnails/kayo.png";
+                icons[8] = "./Resources/Thumbnails/killjoy.png";
+                icons[9] = "./Resources/Thumbnails/neon.png";
+                icons[10] = "./Resources/Thumbnails/omen.png";
+                icons[11] = "./Resources/Thumbnails/phoenix.png";
+                icons[12] = "./Resources/Thumbnails/raze.png";
+                icons[13] = "./Resources/Thumbnails/reyna.png";
+                icons[14] = "./Resources/Thumbnails/sage.png";
+                icons[15] = "./Resources/Thumbnails/skye.png";
+                icons[16] = "./Resources/Thumbnails/sova.png";
+                icons[17] = "./Resources/Thumbnails/viper.png";
+                icons[18] = "./Resources/Thumbnails/yoru.png";
+
+                var operations = 19;
+                var curr_index = lookup_table[3];
+                while (curr_index != rand_index){
+                    //Loop to beginning of array
+                    if(curr_index == 18){
+                        curr_index = 0;
+                        operations++;
+                    } else {
+                        curr_index++;
+                        operations++;
+                    }
+                    
+                }
+                var frame;
+                var time = 1; //miliseconds between operations
+                var count = 0;
+
+                frame = setInterval(frame, 100)
+                function frame() {
+                    setTimeout(function inner() {
+                        if (count < operations) {
+                            inc(icons, lookup_table, elem, images);
+                            time = (time ** 2);
+                            count++;
+                        } else {
+                            clearInterval(frame);
+                        }
+                    }, time);
+                }
             }
-            randomize()
+            spin();
         </script>
-        <a href="#" class="button w-button" type="button" onclick="randomize()">SPIN</a>
     </body>
 </html>
