@@ -32,7 +32,13 @@
                 var rand_index = Math.floor(Math.random() * images.length);
 
                 var operations = 16;
-                var curr_index = 0;
+                var curr_img = document.getElementById("site").style.backgroundImage.substring(5, document.getElementById("site").style.backgroundImage.length - 2);
+                if (curr_img == "") {
+                    var curr_index = 0;
+                    inc(0, images);
+                } else {
+                    var curr_index = images.indexOf(curr_img)
+                }
                 while (curr_index != rand_index){
                     //Loop to beginning of array
                     if(curr_index == 7){
@@ -47,6 +53,7 @@
                 var frame;
                 var time = 1; //miliseconds between operations
                 var count = 0;
+                curr_index = images.indexOf(curr_img);
 
                 frame = setInterval(frame, 100)
                 function frame() {
