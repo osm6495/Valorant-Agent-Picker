@@ -96,8 +96,25 @@
                 }
                 return unescape(document.cookie.substring(begin + (pos + "=").length, end));
             }
+            function run() {
+                var time = 1; //miliseconds between operations
+                var count = 0;
+
+                frame = setInterval(frame, 100)
+                function frame() {
+                    setTimeout(function inner() {
+                        if (count < 15) {
+                            spin();
+                            time = (time ** 2);
+                            count++;
+                        } else {
+                            clearInterval(frame);
+                        }
+                    }, time);
+                }
+            }
         </script>
-        <a href="#" class="button w-button" type="button" onclick="spin()">SPIN</a>
-        <a href="teams.html" class="fours" type="button" onclick="spin()">FIVES</a>
+        <a href="#" class="button w-button" type="button" onclick="run()">SPIN</a>
+        <a href="teams.html" class="fours" type="button">FIVES</a>
     </body>
 </html>
