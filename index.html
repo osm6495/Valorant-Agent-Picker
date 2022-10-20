@@ -31,7 +31,7 @@
             function inc(icons, lookup_table, elem, images){
                 //Loops all 6 elems
                 for (let i = 0; i < 7; i++) {
-                    if (lookup_table[i] == 18) {
+                    if (lookup_table[i] == 19) {
                         lookup_table[i] = 0; //Increment the stored index of the current element
                         elem[i].src = icons[0]
                     } else {
@@ -65,6 +65,7 @@
                 images[16] = "./Resources/Agents/Sova.png";
                 images[17] = "./Resources/Agents/Viper.png";
                 images[18] = "./Resources/Agents/Yoru.png";
+                images[19] = "./Resources/Thumbnails/Harbor.png";
                 var rand_index = Math.floor(Math.random() * images.length);
                 //document.getElementById("name").textcontent = images.indexOf(document.getElementById("3").src);
                 var time = 100;
@@ -97,12 +98,13 @@
                 icons[16] = "./Resources/Thumbnails/sova.png";
                 icons[17] = "./Resources/Thumbnails/viper.png";
                 icons[18] = "./Resources/Thumbnails/yoru.png";
+                icons[19] = "./Resources/Thumbnails/harbor.png";
 
-                var operations = 19;
+                var operations = 20;
                 var curr_index = lookup_table[3];
                 while (curr_index != rand_index){
                     //Loop to beginning of array
-                    if(curr_index == 18){
+                    if(curr_index == 19){
                         curr_index = 0;
                         operations++;
                     } else {
