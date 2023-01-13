@@ -29,6 +29,7 @@
                 images[5] = "./Resources/Maps/icebox.jpg";
                 images[6] = "./Resources/Maps/pearl.jpg";
                 images[7] = "./Resources/Maps/split.jpg";
+                images[8] = "./Resources/Maps/lotus.jpg";
                 var rand_index = Math.floor(Math.random() * images.length);
 
                 var operations = 16;
@@ -41,7 +42,7 @@
                 }
                 while (curr_index != rand_index){
                     //Loop to beginning of array
-                    if(curr_index == 7){
+                    if(curr_index == 8){
                         curr_index = 0;
                         operations++;
                     } else {
@@ -59,7 +60,7 @@
                 function frame() {
                     setTimeout(function inner() {
                         if (count < operations) {
-                            if(curr_index == 7) {
+                            if(curr_index == 8) {
                                 curr_index = 0;
                                 inc(curr_index, images);
                             } else {
