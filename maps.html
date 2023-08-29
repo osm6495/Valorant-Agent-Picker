@@ -59,7 +59,7 @@
                 var curr_img = document.getElementById("site").style.backgroundImage.substring(5, document.getElementById("site").style.backgroundImage.length - 2);
                 if (curr_img == "") {
                     var curr_index = 0;
-                    inc(0, images);
+                    inc(0, images, names);
                 } else {
                     var curr_index = images.indexOf(curr_img)
                 }
