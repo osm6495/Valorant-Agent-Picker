@@ -15,21 +15,44 @@
         </div>  
         <div class="text-block" id="name">AGENT NAME</div>
         <script type="text/javascript">
-            function inc(curr_index, images) {
-                document.getElementById("site").style.backgroundImage = "url(" + images[curr_index] + ")";
-                document.getElementById("name").textContent = images[curr_index].substr(17,).slice(0, -4).toUpperCase();
+            function fetchdata() {
+                return new Promise((resolve, reject) => {
+                    let request = new XMLHttpRequest();
+                    request.open("GET", "https://valorant-api.com/v1/maps");
+                    request.send();
+                    request.onload = () => {
+                        if (request.status === 200) {
+                            resolve(JSON.parse(request.response));
+                        } else {
+                            reject(new Error("API connection failed"));
+                        }
+                    };
+                });
             }
-            function spin(){
-                var images = new Array();
-                images[0] = "./Resources/Maps/ascent.jpg";
-                images[1] = "./Resources/Maps/bind.jpg";
-                images[2] = "./Resources/Maps/breeze.jpg";
-                images[3] = "./Resources/Maps/fracture.jpg";
-                images[4] = "./Resources/Maps/haven.jpg";
-                images[5] = "./Resources/Maps/icebox.jpg";
-                images[6] = "./Resources/Maps/pearl.jpg";
-                images[7] = "./Resources/Maps/split.jpg";
-                images[8] = "./Resources/Maps/lotus.jpg";
+
+            function inc(curr_index, images, names) {
+                document.getElementById("site").style.backgroundImage = "url(" + images[curr_index] + ")";
+                document.getElementById("name").textContent = names[curr_index].toUpperCase();
+            }
+
+            async function spin(){
+                const response = await fetchdata();
+                const maps = [];
+                
+                for (const map of response.data) {
+                    //Only current way of sorting out Deathmatch maps, hopefully new comp maps won't include this string
+                    if (!map.mapUrl.includes("HURM") || map.displayName !== "The Range") {
+                        maps.push(map);
+                    }
+                }
+
+                var images = [];
+                var names = [];
+                for (map of maps) {
+                        images.push(map.splash);
+                        names.push(map.displayName);
+                }
+
                 var rand_index = Math.floor(Math.random() * images.length);
 
                 var operations = 16;
@@ -42,7 +65,7 @@
                 }
                 while (curr_index != rand_index){
                     //Loop to beginning of array
-                    if(curr_index == 8){
+                    if(curr_index == images.length - 1){
                         curr_index = 0;
                         operations++;
                     } else {
@@ -60,12 +83,12 @@
                 function frame() {
                     setTimeout(function inner() {
                         if (count < operations) {
-                            if(curr_index == 8) {
+                            if(curr_index == images.length - 1) {
                                 curr_index = 0;
-                                inc(curr_index, images);
+                                inc(curr_index, images, names);
                             } else {
                                 curr_index++;
-                                inc(curr_index, images);
+                                inc(curr_index, images, names);
                             }
                             time = (time ** 2);
                             count++;
@@ -76,7 +99,13 @@
                 }
                 
             }
-            spin()
+            (async function() {
+                try {
+                    await spin();
+                } catch (error) {
+                    console.error(error);
+                }
+            })();
         </script>
         <a href="#" class="button w-button" type="button" onclick="spin()">SPIN</a>
     </body>

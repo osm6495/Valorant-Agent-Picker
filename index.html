@@ -28,10 +28,25 @@
             <img src="./Resources/Thumbnails/jett.png" class="thumb" id="7"></img>
         </div>
         <script type="text/javascript">
-            function inc(icons, lookup_table, elem, images){
+            function fetchdata() {
+                return new Promise((resolve, reject) => {
+                    let request = new XMLHttpRequest();
+                    request.open("GET", "https://valorant-api.com/v1/agents");
+                    request.send();
+                    request.onload = () => {
+                        if (request.status === 200) {
+                            resolve(JSON.parse(request.response));
+                        } else {
+                            reject(new Error("API connection failed"));
+                        }
+                    };
+                });
+            }
+            
+            function inc(icons, lookup_table, elem, images, names){
                 //Loops all 6 elems
                 for (let i = 0; i < 7; i++) {
-                    if (lookup_table[i] == 20) {
+                    if (lookup_table[i] == icons.length - 1) {
                         lookup_table[i] = 0; //Increment the stored index of the current element
                         elem[i].src = icons[0]
                     } else {
@@ -40,99 +55,83 @@
                     }
                     if (i == 3) {
                         document.getElementById("agent").src = images[lookup_table[i]];
-                        document.getElementById("name").textContent = images[lookup_table[i]].substr(19,).slice(0, -4).toUpperCase();
+                        document.getElementById("name").textContent = names[lookup_table[i]].toUpperCase();
                     }
                 }
             }
-            function spin(){
-                var images = new Array();
-                images[0] = "./Resources/Agents/Astra.png";
-                images[1] = "./Resources/Agents/Breach.png";
-                images[2] = "./Resources/Agents/Brimstone.png";
-                images[3] = "./Resources/Agents/Chamber.png";
-                images[4] = "./Resources/Agents/Cypher.png";
-                images[5] = "./Resources/Agents/Fade.png";
-                images[6] = "./Resources/Agents/Gekko.png";
-                images[7] = "./Resources/Agents/Jett.png";
-                images[8] = "./Resources/Agents/KAYO.png";
-                images[9] = "./Resources/Agents/Killjoy.png";
-                images[10] = "./Resources/Agents/Neon.png";
-                images[11] = "./Resources/Agents/Omen.png";
-                images[12] = "./Resources/Agents/Phoenix.png";
-                images[13] = "./Resources/Agents/Raze.png";
-                images[14] = "./Resources/Agents/Reyna.png";
-                images[15] = "./Resources/Agents/Sage.png";
-                images[16] = "./Resources/Agents/Skye.png";
-                images[17] = "./Resources/Agents/Sova.png";
-                images[18] = "./Resources/Agents/Viper.png";
-                images[19] = "./Resources/Agents/Yoru.png";
-                images[20] = "./Resources/Agents/Harbor.png";
-                var rand_index = Math.floor(Math.random() * images.length);
-                //document.getElementById("name").textcontent = images.indexOf(document.getElementById("3").src);
-                var time = 100;
-                var elem = new Array();
-                elem[0] = document.getElementById("1");
-                elem[1] = document.getElementById("2");
-                elem[2] = document.getElementById("3");
-                elem[3] = document.getElementById("4");
-                elem[4] = document.getElementById("5");
-                elem[5] = document.getElementById("6");
-                elem[6] = document.getElementById("7");
-                var lookup_table = new Array(0, 1, 2, 3, 4, 5, 6);
-                var icons = new Array();
-                icons[0] = "./Resources/Thumbnails/astra.png";
-                icons[1] = "./Resources/Thumbnails/breach.png";
-                icons[2] = "./Resources/Thumbnails/brimstone.png";
-                icons[3] = "./Resources/Thumbnails/chamber.png";
-                icons[4] = "./Resources/Thumbnails/cypher.png";
-                icons[5] = "./Resources/Thumbnails/fade.png";
-                icons[6] = "./Resources/Thumbnails/gekko.png";
-                icons[7] = "./Resources/Thumbnails/jett.png";
-                icons[8] = "./Resources/Thumbnails/kayo.png";
-                icons[9] = "./Resources/Thumbnails/killjoy.png";
-                icons[10] = "./Resources/Thumbnails/neon.png";
-                icons[11] = "./Resources/Thumbnails/omen.png";
-                icons[12] = "./Resources/Thumbnails/phoenix.png";
-                icons[13] = "./Resources/Thumbnails/raze.png";
-                icons[14] = "./Resources/Thumbnails/reyna.png";
-                icons[15] = "./Resources/Thumbnails/sage.png";
-                icons[16] = "./Resources/Thumbnails/skye.png";
-                icons[17] = "./Resources/Thumbnails/sova.png";
-                icons[18] = "./Resources/Thumbnails/viper.png";
-                icons[19] = "./Resources/Thumbnails/yoru.png";
-                icons[20] = "./Resources/Thumbnails/harbor.png";
-
-                var operations = 21;
-                var curr_index = lookup_table[3];
-                while (curr_index != rand_index){
-                    //Loop to beginning of array
-                    if(curr_index == 20){
-                        curr_index = 0;
-                        operations++;
-                    } else {
-                        curr_index++;
-                        operations++;
-                    }
+            
+            async function spin(){
+                try {
+                    const response = await fetchdata();
+                    const agents = [];
                     
-                }
-                var frame;
-                var time = 1; //miliseconds between operations
-                var count = 0;
-
-                frame = setInterval(frame, 100)
-                function frame() {
-                    setTimeout(function inner() {
-                        if (count < operations) {
-                            inc(icons, lookup_table, elem, images);
-                            time = (time ** 2);
-                            count++;
-                        } else {
-                            clearInterval(frame);
+                    for (const agent of response.data) {
+                        if (agent.isPlayableCharacter) {
+                            agents.push(agent);
                         }
-                    }, time);
+                    }
+
+                    var time = 100;
+                    var elem = [];
+                    elem[0] = document.getElementById("1");
+                    elem[1] = document.getElementById("2");
+                    elem[2] = document.getElementById("3");
+                    elem[3] = document.getElementById("4");
+                    elem[4] = document.getElementById("5");
+                    elem[5] = document.getElementById("6");
+                    elem[6] = document.getElementById("7");
+                    var lookup_table = new Array(0, 1, 2, 3, 4, 5, 6);
+                    var icons = [];
+                    var images = [];
+                    var names = [];
+                    for (agent of agents) {
+                        icons.push(agent.displayIcon);
+                        images.push(agent.fullPortrait);
+                        names.push(agent.displayName);
+                    }
+
+                    const rand_index = Math.floor(Math.random() * images.length);
+
+                    var operations = agents.length;
+                    var curr_index = lookup_table[3];
+                    while (curr_index != rand_index){
+                        //Loop to beginning of array
+                        if(curr_index == agents.length - 1){
+                            curr_index = 0;
+                            operations++;
+                        } else {
+                            curr_index++;
+                            operations++;
+                        }
+                        
+                    }
+                    var frame;
+                    var time = 1; //miliseconds between operations
+                    var count = 0;
+
+                    frame = setInterval(clock, 100)
+                    function clock() {
+                        setTimeout(function inner() {
+                            if (count < operations) {
+                                inc(icons, lookup_table, elem, images, names);
+                                time = (time ** 2);
+                                count++;
+                            } else {
+                                clearInterval(frame);
+                            }
+                        }, time);
+                    }
+                } catch (error) {
+                    console.error(error)
                 }
             }
-            spin();
+            (async function() {
+                try {
+                    await spin();
+                } catch (error) {
+                    console.error(error);
+                }
+            })();
         </script>
     </body>
 </html>
