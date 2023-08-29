@@ -41,7 +41,7 @@
                 
                 for (const map of response.data) {
                     //Only current way of sorting out Deathmatch maps, hopefully new comp maps won't include this string
-                    if (!map.mapUrl.includes("HURM") || map.displayName !== "The Range") {
+                    if (!map.mapUrl.includes("HURM") && map.displayName !== "The Range") {
                         maps.push(map);
                     }
                 }
@@ -85,11 +85,10 @@
                         if (count < operations) {
                             if(curr_index == images.length - 1) {
                                 curr_index = 0;
-                                inc(curr_index, images, names);
                             } else {
                                 curr_index++;
-                                inc(curr_index, images, names);
                             }
+                            inc(curr_index, images, names);
                             time = (time ** 2);
                             count++;
                         } else {
